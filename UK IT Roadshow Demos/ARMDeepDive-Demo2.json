@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageName": {
+            "defaultValue": "sathecloudguy",
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiVersion": "2015-06-15"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[parameters('storageName')]",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {
+                "accountType": "Standard_RAGRS"
+            },
+            "dependsOn": []
+        },
+        { 
+            "apiVersion": "2016-02-01", 
+            "name": "nestedTemplate", 
+            "type": "Microsoft.Resources/deployments", 
+            "properties": { 
+                "mode": "Incremental", 
+                "templateLink": {
+                    "uri": "https://tcgdemofiles.blob.core.windows.net/arm/ARMDeepDive-Demo1.json",
+                    "contentVersion": "1.0.0.0"
+                }
+            } 
+        } 
+    ]
+}

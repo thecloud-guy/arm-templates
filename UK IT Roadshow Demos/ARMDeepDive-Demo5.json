@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[concat('VN-TheCloudGuy-', copyIndex())]",
+            "apiVersion": "2015-06-15",
+            "copy": { 
+                "name": "vncopy", 
+                "count": 4
+            },
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "172.16.0.0/20"
+                    ]
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}
